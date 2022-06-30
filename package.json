@@ -1,11 +1,12 @@
 {
   "name": "api-gateway",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "scripts": {
     "watch": "ts-node-dev --respawn index.dev.ts",
     "prepare": "husky install",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "pub": "npm version patch --force && npm publish"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
