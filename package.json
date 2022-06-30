@@ -5,20 +5,21 @@
   "scripts": {
     "watch": "ts-node-dev --respawn index.dev.ts",
     "prepare": "husky install",
-    "test": "echo ”[Husky] pre-commit"
+    "pre-commit": "echo ”[Husky] pre-commit"
   },
   "lint-staged": {
-    "*.ts": [
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
       "eslint --fix",
       "prettier --write"
     ]
   },
   "devDependencies": {
+    "eslint": "^8.18.0",
+    "husky": "7",
     "lint-staged": "^13.0.3",
     "module-alias": "^2.2.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^4.7.4",
-    "husky": "^8.0.0"
+    "typescript": "^4.7.4"
   },
   "husky": {
     "hooks": {
