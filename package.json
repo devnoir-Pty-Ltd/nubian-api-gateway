@@ -4,8 +4,7 @@
   "license": "MIT",
   "scripts": {
     "watch": "ts-node-dev --respawn index.dev.ts",
-    "prepare": "husky install",
-    "pre-commit": "echo ”[Husky] pre-commit"
+    "prepare": "husky install"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
