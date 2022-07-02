@@ -1,4 +1,4 @@
-import * as gott from 'got';
+import * as got from 'got';
 import { Got } from 'got';
 import { uriConfig } from '@root/services/config';
 
@@ -20,7 +20,7 @@ export class BaseService {
 	}
 
 	constructor(SERVICE_URI: string) {
-		this.got = gott;
+		this.got = got;
 		this.SERVICE_URI = <string>uriConfig.get(SERVICE_URI);
 	}
 
