@@ -1,1 +1,3 @@
-console.log('hello');
+import initServer from '@root/server/initServer';
+
+initServer();
