@@ -26,5 +26,8 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "_moduleAliases": {
+    "@root": "./src"
   }
 }
