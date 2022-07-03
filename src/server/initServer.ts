@@ -9,7 +9,7 @@ import { schema } from '@root/graphql/schema';
 import { Express } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 
-import gqlFormatErrors from './middleware/gqlFormatErrors';
+import gqlFormatErrors from './gqlFormatErrors';
 import resolvers from '@root/graphql/resolvers';
 
 const initServer: () => Promise<void> = async () => {
