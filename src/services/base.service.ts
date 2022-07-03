@@ -1,5 +1,5 @@
 import got, { Got } from 'got';
-import uriConfig from 'src/services/serviceURI';
+import uriConfig from '@root/services/serviceURI';
 
 export default class BaseService {
 	_got: any;

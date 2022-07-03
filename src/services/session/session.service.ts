@@ -5,7 +5,7 @@ type ISession = {
 	token: string;
 	userId: string;
 };
-class UserService extends BaseService {
+class SessionService extends BaseService {
 	constructor(SERVICE_URI: string) {
 		super(SERVICE_URI);
 	}
@@ -21,4 +21,4 @@ class UserService extends BaseService {
 		return <ISession | null>response;
 	};
 }
-export default new UserService('USER_SERVICE_URI');
+export default new SessionService('USER_SERVICE_URI');
