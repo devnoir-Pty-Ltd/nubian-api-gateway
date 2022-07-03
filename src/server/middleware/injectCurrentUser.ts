@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import sessionService from 'src/services/session/session.service';
+import { sessionService } from '@root/services';
 
 const injectCurrentUser = async (req: Request, res: Response, next: NextFunction) => {
 	if (req.cookies.userSessionId) {
