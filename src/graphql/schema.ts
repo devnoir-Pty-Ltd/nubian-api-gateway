@@ -31,10 +31,23 @@ export const schema: DocumentNode = gql`
 		token: String!
 		createdAt: Date!
 		userId: String!
-		user: User!
+		user: User
 	}
 
+	type Mutation {
+		signin(email: String!, password: String!): Session!
+		signup(
+			email: String!
+			password: String!
+			password_confirmation: String!
+			knownAs: String!
+			fullName: String!
+			company: String!
+		): User!
+		signout: Boolean!
+	}
 	type Query {
+		fetchUsers: [User!]!
 		signedIn(me: Boolean!): Session
 	}
 `;

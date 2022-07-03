@@ -1,26 +1,28 @@
-import * as got from 'got';
-import { Got } from 'got';
-import { uriConfig } from '@root/services/config';
+import got, { Got } from 'got';
+import uriConfig from 'src/services/serviceURI';
 
-export class BaseService {
-	_got: Got;
+export default class BaseService {
+	_got: any;
 	_SERVICE_URI: string;
+
+	public get got() {
+		return this._got;
+	}
+
+	public set got(newValue: Got) {
+		this._got = newValue;
+	}
 
 	public get SERVICE_URI() {
 		return this._SERVICE_URI;
 	}
+
 	public set SERVICE_URI(newValue: string) {
+		this.got = got;
 		this._SERVICE_URI = newValue;
-	}
-	public get got() {
-		return this._got;
-	}
-	public set got(newValue: Got | any) {
-		this._got = newValue;
 	}
 
 	constructor(SERVICE_URI: string) {
-		this.got = got;
 		this.SERVICE_URI = <string>uriConfig.get(SERVICE_URI);
 	}
 
@@ -37,12 +39,11 @@ export class BaseService {
 				.json();
 			return response;
 		} catch (error) {
-			error.status = 401;
 			return error;
 		}
 	};
 
-	createItem: (path: string, data: any, token?: any | null) => Promise<void> = async (path, data, token) => {
+	createItem: (path: string, data: any, token?: any | null) => Promise<any> = async (path, data, token) => {
 		try {
 			const response = await this.got
 				.post(`${this.SERVICE_URI}/${path}`, {
