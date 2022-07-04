@@ -1,12 +1,14 @@
 import fetch, { Response } from 'node-fetch';
 import { log } from '@root/utils';
 import uriConfig from '@root/services/serviceURI';
+import { TUser } from '@root/graphql/types';
 const SERVICE_URI = <string>uriConfig.get('USER_SERVICE_URI');
 
 export type ISession = {
 	id: string;
 	token: string;
 	userId: string;
+	user?: TUser;
 };
 class SessionService {
 	async getSession({ sessionId }: { sessionId: string }): Promise<ISession | null> {
