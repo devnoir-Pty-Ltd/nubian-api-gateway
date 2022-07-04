@@ -1,19 +1,20 @@
-import * as config from 'config';
-import * as morgan from 'morgan';
-import * as express from 'express';
-import * as cors from 'cors';
-import * as cookieParser from 'cookie-parser';
+import config from 'config';
+import morgan from 'morgan';
+import express from 'express';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 import { log } from '@root/utils';
 import { schema } from '@root/graphql/schema';
 import { Express } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 
-import gqlFormatErrors from './middleware/gqlFormatErrors';
+import gqlFormatErrors from './gqlFormatErrors';
 import resolvers from '@root/graphql/resolvers';
+import injectCurrentUser from '@root/server/middleware/injectCurrentUser';
 
 const initServer: () => Promise<void> = async () => {
-	const PORT = <number>config.get('PORT') || 7001;
+	const PORT = <number>config.get('PORT') || 8000;
 	const app: Express = express();
 
 	const apolloServer: ApolloServer = new ApolloServer({
@@ -44,6 +45,8 @@ const initServer: () => Promise<void> = async () => {
 			optionsSuccessStatus: 200,
 		}),
 	);
+
+	app.use(injectCurrentUser);
 	await apolloServer.start();
 	apolloServer.applyMiddleware({ app, cors: false, path: '/graphql' });
 
