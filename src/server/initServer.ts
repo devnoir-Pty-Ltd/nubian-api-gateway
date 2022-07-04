@@ -25,6 +25,11 @@ const initServer: () => Promise<void> = async () => {
 		typeDefs: schema,
 	});
 
+	const corsOptions = {
+		origin: ['https://studio.apollographql.com'],
+		credentials: true,
+	};
+
 	const loggerStream = {
 		write: (text: string) => {
 			log.info(text);
@@ -39,6 +44,7 @@ const initServer: () => Promise<void> = async () => {
 			preflightContinue: true,
 			exposedHeaders: [
 				'Access-Control-Allow-Headers',
+				'Access-Control-Allow-Origin:https://studio.apollographql.com',
 				'Access-Control-Allow-Origin, Origin, X-Requested-With, Content-Type, Accept',
 				'X-Password-Expired',
 			],
@@ -48,7 +54,7 @@ const initServer: () => Promise<void> = async () => {
 
 	app.use(injectCurrentUser);
 	await apolloServer.start();
-	apolloServer.applyMiddleware({ app, cors: false, path: '/graphql' });
+	apolloServer.applyMiddleware({ app, cors: corsOptions, path: '/graphql' });
 
 	app.listen(PORT, () => {
 		log.info(`api-gateway listening on port ${PORT}`);
