@@ -1,24 +1,26 @@
-import BaseService from 'src/services/base.service';
+import fetch, { Response } from 'node-fetch';
+import { log } from '@root/utils';
+import uriConfig from '@root/services/serviceURI';
+const SERVICE_URI = <string>uriConfig.get('USER_SERVICE_URI');
 
 type ISession = {
 	id: string;
 	token: string;
 	userId: string;
 };
-class UserService extends BaseService {
-	constructor(SERVICE_URI: string) {
-		super(SERVICE_URI);
+class SessionService {
+	async getSession({ sessionId }: { sessionId: string }): Promise<ISession | null> {
+		try {
+			const response: Response = await fetch(`${SERVICE_URI}/auth/session/${sessionId}`);
+			const data: ISession = await response.json();
+			return <ISession>data;
+		} catch (error) {
+			log.error(`[session.service] - getSession ${error.message}`);
+			if (error.status === 404) {
+				return null;
+			}
+			return error;
+		}
 	}
-	getSession: ({ sessionId }: { sessionId: string }) => Promise<ISession | null> = async ({ sessionId }) => {
-		const response = await this.got
-			.get(`${this.SERVICE_URI}/auth/session/${sessionId}`)
-			.json()
-			.catch((err) => {
-				if (err.response.statusCode === 404) return null;
-				throw err;
-			});
-		if (!response) return null;
-		return <ISession | null>response;
-	};
 }
-export default new UserService('USER_SERVICE_URI');
+export default new SessionService();
