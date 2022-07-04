@@ -8,6 +8,7 @@ import { log } from '@root/utils';
 import { schema } from '@root/graphql/schema';
 import { Express } from 'express';
 import { ApolloServer } from 'apollo-server-express';
+import { ApolloServerPluginInlineTrace } from 'apollo-server-core';
 
 import gqlFormatErrors from './gqlFormatErrors';
 import resolvers from '@root/graphql/resolvers';
@@ -23,6 +24,7 @@ const initServer: () => Promise<void> = async () => {
 		formatError: gqlFormatErrors,
 		resolvers,
 		typeDefs: schema,
+		plugins: [ApolloServerPluginInlineTrace()],
 	});
 
 	const corsOptions = {
