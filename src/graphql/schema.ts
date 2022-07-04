@@ -34,18 +34,19 @@ export const schema: DocumentNode = gql`
 		user: User
 	}
 
-	type Mutation {
+	type Mutations {
 		signin(email: String!, password: String!): Session!
 		signup(
+			knownAs: String!
+			fullName: String!
 			email: String!
 			password: String!
 			password_confirmation: String!
-			knownAs: String!
-			fullName: String!
 			company: String!
 		): User!
 		signout: Boolean!
 	}
+
 	type Query {
 		fetchUsers: [User!]!
 		signedIn(me: Boolean!): Session
