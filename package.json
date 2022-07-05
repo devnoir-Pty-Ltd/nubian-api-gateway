@@ -9,16 +9,31 @@
     "pub": "npm version patch --force && npm publish"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+    "src/**/*.{js,ts,json}": [
       "eslint --fix",
       "prettier --write"
     ]
   },
   "devDependencies": {
+    "@types/config": "^0.0.41",
+    "@types/cookie-parser": "^1.4.3",
+    "@types/cors": "^2.8.12",
+    "@types/graphql": "^14.5.0",
+    "@types/morgan": "^1.9.3",
+    "@types/node": "^18.0.0",
+    "@types/node-fetch": "2.x",
+    "@types/prettier": "^2.6.3",
+    "@types/winston": "^2.4.4",
+    "@typescript-eslint/eslint-plugin": "^5.30.0",
+    "@typescript-eslint/parser": "^5.30.0",
     "eslint": "^8.18.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "husky": "7",
     "lint-staged": "^13.0.3",
     "module-alias": "^2.2.2",
+    "prettier": "^2.7.1",
+    "prettier-eslint": "^15.0.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^4.7.4"
   },
@@ -26,5 +41,22 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
+  },
+  "_moduleAliases": {
+    "@root": "./src"
+  },
+  "dependencies": {
+    "apollo-server": "^3.9.0",
+    "apollo-server-express": "^3.9.0",
+    "config": "^3.3.7",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "got": "^12.1.0",
+    "graphql": "^16.5.0",
+    "morgan": "^1.10.0",
+    "node-fetch": "2.6.6",
+    "ts-node": "^10.8.2",
+    "winston": "^3.8.1"
   }
 }
