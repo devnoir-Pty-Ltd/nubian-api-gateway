@@ -34,8 +34,22 @@ export const schema: DocumentNode = gql`
 		user: User
 	}
 
-	type Mutations {
+	type Message {
+		_id: ID!
+		senderId: String!
+		senderType: String!
+		receiverType: String!
+		receiverId: String!
+		text: String!
+		imageSrc: String
+		createdAt: Date!
+		updatedAt: Date
+		sender: User
+	}
+
+	type Mutation {
 		signin(email: String!, password: String!): Session!
+
 		signup(
 			knownAs: String!
 			fullName: String!
@@ -44,11 +58,34 @@ export const schema: DocumentNode = gql`
 			password_confirmation: String!
 			company: String!
 		): User!
+
 		signout: Boolean!
+
+		updatemessage(
+			id: String!
+			senderId: String!
+			senderType: String!
+			receiverType: String!
+			receiverId: String!
+			text: String!
+			imageSrc: String
+		): Message!
+		deleteMessage(id: String!): Boolean!
+
+		sendmessage(
+			senderId: String!
+			senderType: String!
+			receiverType: String!
+			receiverId: String!
+			text: String!
+			imageSrc: String
+		): Message
 	}
 
 	type Query {
 		fetchUsers: [User!]!
 		signedIn(me: Boolean!): Session
+		getmessage(id: String!): Message
+		getmessages: [Message!]!
 	}
 `;
