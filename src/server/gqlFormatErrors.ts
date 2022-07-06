@@ -1,12 +1,14 @@
 import { ApolloError } from 'apollo-server-errors';
+import { log } from '@root/utils';
 
 const gqlFormatErrors = (error: ApolloError | any) => {
-	console.log('this is is the error', error);
+	log.error('[gqlFormatErrors]', error);
 	const errorDetails = error.originalError?.response?.body;
 
 	try {
 		if (errorDetails) return JSON.parse(errorDetails);
 	} catch (e) {
+		log.error('[gqlFormatErrors] json parse', error);
 		console.log('there is an error somewhere', e.message);
 	}
 
