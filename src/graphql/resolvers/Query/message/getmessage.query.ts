@@ -5,14 +5,14 @@ import userService from '@root/services/user/user.service';
 
 const getmessage = async (_obj: any, args: any, context: IResolverContext) => {
 	try {
-		const token: string = context.req.cookies['NUBIAN-WEBTOKEB'];
+		const token: string = context.req.cookies['nubian_token'];
 		if (!token) throw new createError.Unauthorized();
 
 		let response = await messageService.fetchData(`messages/${args.id}`, token);
 		const users: any = await userService.fetchData('users/', token);
 
 		const currentUser = users.find((item: any) => {
-			return item.id === context.req.cookies['NUBIAN-SJID'];
+			return item.id === context.req.cookies['nubian_sjid'];
 		});
 
 		response = response.filter((item: any) => {

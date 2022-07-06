@@ -4,7 +4,7 @@ import messageService from '@root/services/message/message.service';
 
 const deleteMessageMutation = async (_obj: any, args: any, context: IResolverContext) => {
 	try {
-		const token: string = context.req.cookies['NUBIAN-WEBTOKEB'];
+		const token: string = context.req.cookies['nubian_token'];
 		if (!token) throw new createError.Unauthorized();
 		await messageService.deleteMessage({ ...args, token });
 		return true;

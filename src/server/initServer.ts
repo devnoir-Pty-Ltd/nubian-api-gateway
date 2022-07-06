@@ -20,7 +20,6 @@ const initServer: () => Promise<void> = async () => {
 
 	const apolloServer: ApolloServer = new ApolloServer({
 		context: (a) => a,
-		csrfPrevention: true,
 		formatError: gqlFormatErrors,
 		resolvers,
 		typeDefs: schema,
@@ -41,12 +40,12 @@ const initServer: () => Promise<void> = async () => {
 	app.use(cookieParser());
 	app.use(
 		cors({
-			origin: (_, callback) => callback(null, true),
+			origin: (origin, callback) => callback(null, true),
 			credentials: true,
 			preflightContinue: true,
 			exposedHeaders: [
 				'Access-Control-Allow-Headers',
-				'Access-Control-Allow-Origin:https://studio.apollographql.com',
+				'Access-Control-Allow-Origin: *',
 				'Access-Control-Allow-Origin, Origin, X-Requested-With, Content-Type, Accept',
 				'X-Password-Expired',
 			],

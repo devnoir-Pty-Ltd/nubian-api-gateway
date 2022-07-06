@@ -4,7 +4,7 @@ import { IResolverContext } from '@root/graphql/types';
 
 const sendMessageMutation = async (_obj: any, args: any, context: IResolverContext) => {
 	try {
-		const token: string = context.req.cookies['NUBIAN-WEBTOKEB'];
+		const token: string = context.req.cookies['nubian_token'];
 		if (!token) throw new createError.Unauthorized();
 		const { data } = await messageService.createItem('messages', { ...args }, token);
 		return data;
