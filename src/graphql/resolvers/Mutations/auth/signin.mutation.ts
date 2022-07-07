@@ -10,8 +10,8 @@ const signinMutation = async (_obj: any, { email, password }: ISignInInput, cont
 		if (session instanceof Error) {
 			return session;
 		}
+		console.log('this is the session', session);
 		context.res.cookie('nubian_sjid', session.id, { httpOnly: true, secure: true });
-		context.res.cookie('nubian_token', session.token, { httpOnly: true, secure: true });
 		return <ISession>session;
 	} catch (error) {
 		log.error('[signinMutation]', error);
