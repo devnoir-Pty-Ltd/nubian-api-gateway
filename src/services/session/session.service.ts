@@ -15,7 +15,7 @@ class SessionService {
 		try {
 			const response: Response = await fetch(`${SERVICE_URI}/auth/session/${sessionId}`);
 			const data: ISession = await response.json();
-			return <ISession>data;
+			return data;
 		} catch (error) {
 			log.error(`[session.service] - getSession ${error.message}`);
 			if (error.status === 404) {
@@ -26,6 +26,7 @@ class SessionService {
 	}
 	async fetchData(path: string, token: string) {
 		try {
+			log.info(`[session.service] - fetch ${token}`);
 			if (!token) return new Error('Unauthorized');
 			const response: Response = await fetch(`${SERVICE_URI}/${path}`, {
 				method: 'GET',
