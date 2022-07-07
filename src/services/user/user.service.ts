@@ -1,6 +1,7 @@
 import fetch, { Response } from 'node-fetch';
 import { log } from '@root/utils';
 import uriConfig from '@root/services/serviceURI';
+import { TUser } from '@root/graphql/types';
 const SERVICE_URI = <string>uriConfig.get('USER_SERVICE_URI');
 
 class UserService {
@@ -20,7 +21,7 @@ class UserService {
 			return error;
 		}
 	};
-	async fetchData(path: string, token: string) {
+	async fetchData({ path, token }: { path: string; token: string }): Promise<any | Error> {
 		try {
 			if (!token) return new Error('Unauthorized');
 			const response: Response = await fetch(`${SERVICE_URI}/${path}`, {
@@ -30,7 +31,8 @@ class UserService {
 					Authorization: 'Bearer ' + token,
 				},
 			});
-			return await response.json();
+			const data: TUser = await response.json();
+			return data;
 		} catch (error) {
 			log.error(`[user.service] - fetchData ${error.message}`);
 			return error;
