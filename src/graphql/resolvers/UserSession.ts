@@ -1,9 +1,9 @@
-import userService from '@root/services/user/user.service';
 import { UserSessionType } from '@root/graphql/types';
+import UserService from '@root/services/user/user.service';
 
 const UserSession = {
-	user: async (session: UserSessionType) => {
-		return await userService.fetchUser({ userId: session.userId });
+	user: async (userSession: UserSessionType) => {
+		return await UserService.fetchUser(userSession.userId, userSession.token);
 	},
 };
 
