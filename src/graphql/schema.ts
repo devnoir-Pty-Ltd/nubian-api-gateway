@@ -5,35 +5,29 @@ export const schema: DocumentNode = gql`
 	scalar Date
 
 	type User {
-		id: ID!
-		knowAs: String!
-		fullName: String!
-		email: String!
-		account: Account!
+		id: String
+		knownAs: String
+		fullName: String
+		email: String
+		confirmed: Boolean
+		accountId: String
+		createdAt: Date
+		updatedAt: Date
 	}
 
-	type Account {
-		id: ID!
-		userId: String!
-		company: String!
-		createdAt: Date!
-		updatedAt: Date!
-		renew_on: Date!
-	}
-
-	type Session {
+	type UserSession {
 		id: ID!
 		token: String!
 		createdAt: Date!
 		userId: String!
-		user: User
+		user: User!
 	}
 
 	type Mutation {
-		createSession(email: String!, password: String!): Session!
+		createSession(email: String!, password: String!): UserSession!
 	}
 
 	type Query {
-		signedIn(me: Boolean!): Session
+		userSession(me: Boolean!): UserSession
 	}
 `;
