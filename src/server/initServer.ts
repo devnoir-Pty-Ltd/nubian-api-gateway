@@ -14,26 +14,22 @@ import resolvers from '@root/graphql/resolvers';
 import injectCurrentUser from '@root/server/middleware/injectCurrentUser';
 
 const PORT = <number>config.get('PORT') || 8000;
-
+const loggerStream = {
+	write: (text: string) => {
+		log.info(text);
+	},
+};
+const apolloServer: ApolloServer = new ApolloServer({
+	formatError: gqlFormatErrors,
+	resolvers,
+	typeDefs: schema,
+	cache: 'bounded',
+	context: async ({ req, res }) => {
+		return { req, res };
+	},
+});
+const app: Express = express();
 const initServer: () => Promise<void> = async () => {
-	const loggerStream = {
-		write: (text: string) => {
-			log.info(text);
-		},
-	};
-
-	const apolloServer: ApolloServer = new ApolloServer({
-		formatError: gqlFormatErrors,
-		resolvers,
-		typeDefs: schema,
-		cache: 'bounded',
-		context: async ({ req, res }) => {
-			return { req, res };
-		},
-	});
-
-	const app: Express = express();
-
 	app.use(cookieParser());
 	app.use(morgan('combined', { stream: loggerStream }));
 	app.use(
