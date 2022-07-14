@@ -15,7 +15,7 @@ module.exports = {
 	ignorePatterns: ['.eslintrc.js'],
 	rules: {
 		'@typescript-eslint/no-unused-vars': 'error',
-		'@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+		'@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
 		// to enforce using type for object type definitions, can be type or interface
 		'@typescript-eslint/interface-name-prefix': 'off',
 		'@typescript-eslint/explicit-function-return-type': 'off',
