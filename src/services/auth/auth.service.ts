@@ -1,23 +1,24 @@
 import fetch, { Response } from 'node-fetch';
 import { log } from '@root/utils';
 import uriConfig from '@root/services/serviceURI';
+import { ISession } from '../session/session.service';
 const SERVICE_URI = <string>uriConfig.get('USER_SERVICE_URI');
 
-export type ISignInInput = {
+export interface ISignInInput {
 	email: string;
 	password: string;
-};
+}
 
-export type ISignUpInput = {
+export interface ISignUpInput {
 	knownAs: string;
 	fullName: string;
 	email: string;
 	company: string;
 	password: string;
 	password_confirmation: string;
-};
+}
 
-class AuthService {
+export default class AuthService {
 	async signup({
 		knownAs,
 		fullName,
@@ -54,22 +55,18 @@ class AuthService {
 		}
 	}
 
-	async signin({ email, password }: { email: string; password: string }): Promise<any> {
-		try {
-			const data: ISignInInput = {
-				email,
-				password,
-			};
-			const response: Response = await fetch(`${SERVICE_URI}/auth/login`, {
-				method: 'POST',
-				body: JSON.stringify(data),
-				headers: { 'Content-Type': 'application/json' },
-			});
-			return await response.json();
-		} catch (error) {
-			log.error(`[auth.service] - signin ${error.message}`);
-			return error;
+	static async signin(signInInput: ISignUpInput): Promise<ISession | null> {
+		const response = await fetch(`${SERVICE_URI}/auth/login`, {
+			method: 'POST',
+			body: JSON.stringify({ ...signInInput }),
+			headers: { 'Content-Type': 'application/json' },
+		});
+		const session = <ISession>await response.json();
+		if (!session) {
+			log.warning(`[AuthService signin] - signin no session`);
+			return null;
 		}
+		return session;
 	}
 
 	async signout({ token }: { token: string }): Promise<any> {
@@ -88,38 +85,4 @@ class AuthService {
 			return error;
 		}
 	}
-	async fetchData(path: string, token: string) {
-		try {
-			if (!token) return new Error('Unauthorized');
-			const response: Response = await fetch(`${SERVICE_URI}/${path}`, {
-				method: 'GET',
-				headers: {
-					'content-type': 'application/json;charset=UTF-8',
-					Authorization: 'Bearer ' + token,
-				},
-			});
-			return await response.json();
-		} catch (error) {
-			log.error(`[auth.service] - createItem ${error.message}`);
-			return error;
-		}
-	}
-
-	async createItem(path: string, data: any, token?: any | null) {
-		try {
-			const response = await fetch(`${SERVICE_URI}/${path}`, {
-				body: data,
-				headers: {
-					'content-type': 'application/json;charset=UTF-8',
-					Authorization: 'Bearer ' + token,
-				},
-			});
-			return await response.json();
-		} catch (error) {
-			log.error(`[auth.service] - createItem ${error.message}`);
-			return error;
-		}
-	}
 }
-
-export default new AuthService();
