@@ -5,7 +5,7 @@ export const schema: DocumentNode = gql`
 	scalar Date
 
 	type User {
-		id: String
+		id: ID
 		knownAs: String
 		fullName: String
 		email: String
@@ -13,14 +13,21 @@ export const schema: DocumentNode = gql`
 		accountId: String
 		createdAt: Date
 		updatedAt: Date
+		account: Account
 	}
 
 	type UserSession {
-		id: ID!
+		id: ID
 		token: String!
 		createdAt: Date!
 		userId: String!
 		user: User!
+	}
+
+	type Account {
+		id: ID!
+		company: String
+		renew_on: Date
 	}
 
 	type Mutation {

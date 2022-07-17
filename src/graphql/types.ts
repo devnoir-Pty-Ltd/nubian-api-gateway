@@ -15,6 +15,7 @@ export interface IUser {
 	accountId: string;
 	confirmed: boolean;
 	createdAt: string;
+	account?: IAccount;
 }
 export interface IAccount {
 	id: number;
