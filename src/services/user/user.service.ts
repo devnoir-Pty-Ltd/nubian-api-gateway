@@ -1,6 +1,7 @@
 import fetch, { Response } from 'node-fetch';
 import { log } from '@root/utils';
 import uriConfig from '@root/services/serviceURI';
+import { IAccount } from '@root/graphql/types';
 const SERVICE_URI = <string>uriConfig.get('USER_SERVICE_URI');
 
 export interface IUser {
@@ -11,6 +12,7 @@ export interface IUser {
 	fullName: string;
 	knownAs: string;
 	id: string;
+	account?: IAccount;
 }
 
 export default class UserService {
@@ -20,7 +22,7 @@ export default class UserService {
 			headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
 		});
 		const user: IUser = await response.json().catch((err) => {
-			if (err.response.statusCode === 404) return null;
+			if (err.statusCode === 404) return null;
 			throw err;
 		});
 		log.info(`[UserService user.service] - fetchUser user found`);
