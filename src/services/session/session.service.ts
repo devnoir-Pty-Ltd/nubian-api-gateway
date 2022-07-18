@@ -12,13 +12,13 @@ export interface ISession {
 }
 
 export default class SessionService {
-	static async getSession(sessionId: string): Promise<ISession | null> {
+	static async getSession(sessionId: string): Promise<ISession | any> {
 		const response: Response = await fetch(`${SERVICE_URI}/auth/sessions/${sessionId}`);
 		const session: ISession = await response.json().catch((err) => {
-			if (err.response.statusCode === 404) return null;
+			if (err.statusCode === 404) return null;
 			throw err;
 		});
-		log.info(`[sessionService - getSession]  session availale ${sessionId}`);
+		log.info(`[sessionService - getSession]  session available ${sessionId}`);
 		return <ISession>session;
 	}
 }
