@@ -8,6 +8,7 @@ const createSession = async (_obj: any, args: any, context: IResolverContext) =>
 		email,
 		password,
 	});
+	console.log('this is the session', session);
 	context.res.cookie('nubian_sid', session.id, { httpOnly: true });
 	return <ISession>session;
 };

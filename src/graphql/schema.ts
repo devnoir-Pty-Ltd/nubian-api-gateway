@@ -9,6 +9,8 @@ export const schema: DocumentNode = gql`
 		knownAs: String
 		fullName: String
 		email: String
+		imageSrc: String
+		preferences: String
 		confirmed: Boolean
 		accountId: String
 		createdAt: Date
@@ -18,9 +20,9 @@ export const schema: DocumentNode = gql`
 
 	type UserSession {
 		id: ID
-		token: String!
-		createdAt: Date!
-		userId: String!
+		token: String
+		createdAt: Date
+		userId: String
 		user: User!
 	}
 
