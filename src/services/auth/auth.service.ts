@@ -55,10 +55,10 @@ export default class AuthService {
 		}
 	}
 
-	static async signin(signInInput: ISignUpInput): Promise<ISession | null> {
+	static async signin(signInInput: ISignInInput): Promise<ISession | null> {
 		const response = await fetch(`${SERVICE_URI}/auth/login`, {
 			method: 'POST',
-			body: JSON.stringify({ ...signInInput }),
+			body: JSON.stringify({ email: signInInput.email, password: signInInput.password }),
 			headers: { 'Content-Type': 'application/json' },
 		});
 		const session = <ISession>await response.json();
