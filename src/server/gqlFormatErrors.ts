@@ -9,7 +9,6 @@ const gqlFormatErrors = (error: ApolloError | any) => {
 		if (errorDetails) return JSON.parse(errorDetails);
 	} catch (e) {
 		log.error('[gqlFormatErrors] json parse', error);
-		console.log('there is an error somewhere', e.message);
 	}
 
 	if (error.message) return error.message;
