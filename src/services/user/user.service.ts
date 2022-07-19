@@ -16,16 +16,17 @@ export interface IUser {
 }
 
 export default class UserService {
-	static async fetchUser(userId: string, token: string): Promise<IUser | null> {
-		const response: Response = await fetch(`${SERVICE_URI}/users/${userId}`, {
+	static async fetchUser(userId: string, token: string): Promise<IUser | Error> {
+		const body: Response = await fetch(`${SERVICE_URI}/users/${userId}`, {
 			method: 'GET',
 			headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
 		});
-		const user: IUser = await response.json().catch((err) => {
+		const response = await body.json().catch((err) => {
 			if (err.statusCode === 404) return null;
+			log.info(`[UserService user.service] - fetchUser not found`);
 			throw err;
 		});
 		log.info(`[UserService user.service] - fetchUser user found`);
-		return <IUser>user;
+		return <IUser>response;
 	}
 }
