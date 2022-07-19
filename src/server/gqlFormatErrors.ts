@@ -11,7 +11,7 @@ const gqlFormatErrors = (error: ApolloError | any) => {
 		log.error('[gqlFormatErrors] json parse', error);
 	}
 
-	if (error.message) return error.message;
+	if (error.message) return error;
 
 	return null;
 };
