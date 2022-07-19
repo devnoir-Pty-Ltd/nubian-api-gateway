@@ -3,13 +3,14 @@ import { DocumentNode } from 'graphql';
 
 export const schema: DocumentNode = gql`
 	scalar Date
+	scalar Blob
 
 	type User {
 		id: ID
 		knownAs: String
 		fullName: String
 		email: String
-		imageSrc: String
+		imageSrc: Blob
 		preferences: String
 		confirmed: Boolean
 		accountId: String
