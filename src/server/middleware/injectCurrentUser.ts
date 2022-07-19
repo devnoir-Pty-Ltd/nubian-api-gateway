@@ -5,9 +5,12 @@ import { UserSessionType } from '@root/graphql/types';
 
 const injectCurrentUser = async (req: Request, res: Response, next: NextFunction) => {
 	if (req.cookies.nubian_sid) {
-		const session: UserSessionType = await SessionService.getSession(req.cookies.nubian_sid);
-		res.locals.userSession = session;
-		log.info(`[server middleware] - session injected ${session.id}`);
+		const session = await SessionService.getSession(req.cookies.nubian_sid);
+		if (session.error) {
+			return next(session.error);
+		}
+		res.locals.userSession = <UserSessionType>session;
+		log.info(`[server middleware] - session injected`);
 	}
 	return next();
 };
