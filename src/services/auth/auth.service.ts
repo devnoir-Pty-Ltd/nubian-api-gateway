@@ -2,6 +2,7 @@ import fetch, { Response } from 'node-fetch';
 import { log } from '@root/utils';
 import uriConfig from '@root/services/serviceURI';
 import { ISession } from '../session/session.service';
+import { IUser } from '@root/graphql/types';
 const SERVICE_URI = <string>uriConfig.get('USER_SERVICE_URI');
 
 export interface ISignInInput {
@@ -33,26 +34,21 @@ export default class AuthService {
 		company: string;
 		password: string;
 		password_confirmation: string;
-	}): Promise<any> {
-		try {
-			const data: ISignUpInput = {
-				knownAs,
-				fullName,
-				email,
-				company,
-				password,
-				password_confirmation,
-			};
-			const response: Response = await fetch(`${SERVICE_URI}/auth/signup`, {
-				method: 'POST',
-				body: JSON.stringify(data),
-				headers: { 'Content-Type': 'application/json' },
-			});
-			return await response.json();
-		} catch (error) {
-			log.error(`[auth.service] - signup ${error.message}`);
-			return error;
-		}
+	}): Promise<IUser> {
+		const data: ISignUpInput = {
+			knownAs,
+			fullName,
+			email,
+			company,
+			password,
+			password_confirmation,
+		};
+		const response: Response = await fetch(`${SERVICE_URI}/auth/signup`, {
+			method: 'POST',
+			body: JSON.stringify(data),
+			headers: { 'Content-Type': 'application/json' },
+		});
+		return <IUser>await response.json();
 	}
 
 	static async signin(signInInput: ISignInInput): Promise<ISession | null> {
@@ -70,19 +66,15 @@ export default class AuthService {
 	}
 
 	async signout({ token }: { token: string }): Promise<any> {
-		try {
-			const data = {
-				accessToken: token,
-			};
-			const response: Response = await fetch(`${SERVICE_URI}/auth/logout`, {
-				method: 'DELETE',
-				body: JSON.stringify(data),
-				headers: { Authorization: 'Bearer ' + token },
-			});
-			return await response.json();
-		} catch (error) {
-			log.error(`[auth.service] - signout ${error.message}`);
-			return error;
-		}
+		const data = {
+			accessToken: token,
+		};
+		const response: Response = await fetch(`${SERVICE_URI}/auth/logout`, {
+			method: 'DELETE',
+			body: JSON.stringify(data),
+			headers: { Authorization: 'Bearer ' + token },
+		});
+		const body = await response.json();
+		return body;
 	}
 }
