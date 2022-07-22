@@ -65,16 +65,11 @@ export default class AuthService {
 		return session;
 	}
 
-	async signout({ token }: { token: string }): Promise<any> {
-		const data = {
-			accessToken: token,
-		};
-		const response: Response = await fetch(`${SERVICE_URI}/auth/logout`, {
+	static async signout({ sessionId }: { sessionId: string }): Promise<any> {
+		console.log('i am here', sessionId);
+		const body = await fetch(`${SERVICE_URI}/auth/logout/${sessionId}`, {
 			method: 'DELETE',
-			body: JSON.stringify(data),
-			headers: { Authorization: 'Bearer ' + token },
 		});
-		const body = await response.json();
 		return body;
 	}
 }
