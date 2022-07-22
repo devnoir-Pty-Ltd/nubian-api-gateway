@@ -33,8 +33,30 @@ export const schema: DocumentNode = gql`
 		renew_on: Date
 	}
 
+	type Message {
+		id: ID!
+		senderId: String
+		senderType: String
+		receiverType: String
+		receiverId: String
+		text: String
+		imageSrc: String
+	}
+
 	type Mutation {
 		createSession(email: String!, password: String!): UserSession!
+		deleteSession(me: Boolean!): Boolean!
+
+		sendMessage(
+			senderId: String!
+			senderType: String!
+			receiverType: String!
+			receiverId: String!
+			text: String
+			imageSrc: String
+		): Message!
+
+		deleteMessage(messageId: String!): Boolean!
 	}
 
 	type Query {
