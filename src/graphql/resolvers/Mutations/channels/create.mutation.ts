@@ -6,7 +6,7 @@ const createChannel = async (_obj: any, args: IChannel, context: IResolverContex
 	const token: string = context.req.cookies['nubian_token'];
 	if (!token) throw new createError.Unauthorized();
 	const response = await ChannelService.createItem('channels', { ...args }, token);
-	const body = <IChannel>await response.json();
+	const body = <IChannel>await response;
 	return body;
 };
 
