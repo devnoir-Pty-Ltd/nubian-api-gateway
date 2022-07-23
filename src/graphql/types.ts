@@ -7,6 +7,21 @@ export interface IResolverContext {
 	res: Response;
 }
 
+export interface IChannel {
+	accountId: string;
+	title: string;
+}
+
+export interface IMessage {
+	channelId: string;
+	senderId: string;
+	senderType: string;
+	receiverType: string;
+	receiverId: string;
+	text: string;
+	imageSrc: string;
+}
+
 export interface IUser {
 	id: string;
 	knownAs: string;
