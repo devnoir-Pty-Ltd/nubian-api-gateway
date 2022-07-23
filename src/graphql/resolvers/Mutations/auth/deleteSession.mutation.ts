@@ -15,7 +15,6 @@ const deleteSession = async (_obj: any, args: Args, context: IResolverContext) =
 
 	context.res.clearCookie('nubian_sid');
 	context.res.clearCookie('nubian_token');
-	context.res.clearCookie('nubian_aid');
 
 	return true;
 };
