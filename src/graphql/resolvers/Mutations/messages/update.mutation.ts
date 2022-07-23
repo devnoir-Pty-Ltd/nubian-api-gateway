@@ -6,8 +6,8 @@ const updateMessageMutation = async (_obj: any, args: any, context: IResolverCon
 	try {
 		const token: string = context.req.cookies['nubian_token'];
 		if (!token) throw new createError.Unauthorized();
-		const { data } = await messageService.updateMessage({ ...args, token });
-		return data;
+		const response = await messageService.updateMessage({ ...args, token });
+		return response;
 	} catch (error) {
 		return error;
 	}
