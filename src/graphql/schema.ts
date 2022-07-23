@@ -35,12 +35,19 @@ export const schema: DocumentNode = gql`
 
 	type Message {
 		id: ID!
+		channelId: String
 		senderId: String
 		senderType: String
 		receiverType: String
 		receiverId: String
 		text: String
 		imageSrc: String
+	}
+
+	type Channel {
+		id: ID
+		accountId: String!
+		title: String!
 	}
 
 	type Mutation {
@@ -57,9 +64,14 @@ export const schema: DocumentNode = gql`
 		): Message!
 
 		deleteMessage(messageId: String!): Boolean!
+
+		createChannel(accountId: String!, title: String): Channel!
+		updateChannel(channelId: String!): Channel!
+		deleteChannel(channelId: String!): Boolean!
 	}
 
 	type Query {
 		userSession(me: Boolean!): UserSession
+		getChannels: [Channel!]!
 	}
 `;
