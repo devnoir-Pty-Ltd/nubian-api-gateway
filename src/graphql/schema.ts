@@ -72,6 +72,6 @@ export const schema: DocumentNode = gql`
 
 	type Query {
 		userSession(me: Boolean!): UserSession
-		getChannels: [Channel!]!
+		getChannels(accountId: String!): [Channel!]!
 	}
 `;
