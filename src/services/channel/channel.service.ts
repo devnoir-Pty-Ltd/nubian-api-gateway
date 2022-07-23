@@ -8,11 +8,10 @@ export interface IChannel {
 }
 
 export default class ChannelService {
-	static async fetchData(path: string, token: string, accountId: string) {
+	static async fetchData(path: string, token: string) {
 		if (!token) return new Error('Unauthorized');
 		const response: Response = await fetch(`${SERVICE_URI}/${path}`, {
 			method: 'GET',
-			body: JSON.stringify({ accountId }),
 			headers: {
 				'content-type': 'application/json;charset=UTF-8',
 				Authorization: 'Bearer ' + token,
@@ -22,6 +21,7 @@ export default class ChannelService {
 	}
 	static async createItem(path: string, data: IChannel, token?: any | null) {
 		const response = await fetch(`${SERVICE_URI}/${path}`, {
+			method: 'POST',
 			body: JSON.stringify(data),
 			headers: {
 				'content-type': 'application/json;charset=UTF-8',
