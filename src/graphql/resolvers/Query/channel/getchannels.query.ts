@@ -7,9 +7,8 @@ interface Args {
 }
 const getChannels = async (_obj: any, args: Args, context: IResolverContext) => {
 	const token: string = context.req.cookies['nubian_token'];
-	const { accountId } = context.req.body;
 	if (!token) return new createError.Unauthorized();
-	const response = await channelService.fetchData(`channels`, token, accountId);
+	const response = await channelService.fetchData(`channels`, token);
 	return response;
 };
 
