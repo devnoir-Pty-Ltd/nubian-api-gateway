@@ -3,14 +3,13 @@ import { DocumentNode } from 'graphql';
 
 export const schema: DocumentNode = gql`
 	scalar Date
-	scalar Blob
 
 	type User {
 		id: ID
 		knownAs: String
 		fullName: String
 		email: String
-		imageSrc: Blob
+		imageSrc: String
 		preferences: String
 		confirmed: Boolean
 		accountId: String
@@ -46,8 +45,8 @@ export const schema: DocumentNode = gql`
 
 	type Channel {
 		id: ID
-		accountId: String!
-		title: String!
+		accountId: String
+		title: String
 	}
 
 	type Mutation {

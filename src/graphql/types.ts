@@ -27,7 +27,8 @@ export interface IUser {
 	knownAs: string;
 	fullName: string;
 	email: string;
-	imageSrc: Blob;
+	imageSrc?: string;
+	preferences?: string;
 	accountId: string;
 	confirmed: boolean;
 	createdAt: string;
