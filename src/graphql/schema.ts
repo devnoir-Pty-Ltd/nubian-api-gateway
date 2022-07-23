@@ -33,7 +33,7 @@ export const schema: DocumentNode = gql`
 	}
 
 	type Message {
-		id: ID!
+		_id: ID!
 		channelId: String
 		senderId: String
 		senderType: String
@@ -44,9 +44,10 @@ export const schema: DocumentNode = gql`
 	}
 
 	type Channel {
-		id: ID
+		_id: ID
 		accountId: String
 		title: String
+		imageSrc: String
 	}
 
 	type Mutation {
