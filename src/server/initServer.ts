@@ -8,7 +8,6 @@ import { log } from '@root/utils';
 import { schema } from '@root/graphql/schema';
 import { Express } from 'express';
 import { ApolloServer } from 'apollo-server-express';
-
 import gqlFormatErrors from './gqlFormatErrors';
 import resolvers from '@root/graphql/resolvers';
 import injectCurrentUser from '@root/server/middleware/injectCurrentUser';
@@ -24,12 +23,15 @@ const apolloServer: ApolloServer = new ApolloServer({
 	resolvers,
 	typeDefs: schema,
 	cache: 'bounded',
+	csrfPrevention: true,
 	context: async ({ req, res }) => {
 		return { req, res };
 	},
 });
 const app: Express = express();
 const initServer: () => Promise<void> = async () => {
+	app.use(express.json());
+	app.use(express.urlencoded({ extended: false }));
 	app.use(cookieParser());
 	app.use(morgan('combined', { stream: loggerStream }));
 	app.use(
@@ -49,7 +51,6 @@ const initServer: () => Promise<void> = async () => {
 	app.use(injectCurrentUser);
 
 	await apolloServer.start();
-
 	apolloServer.applyMiddleware({ app, cors: false, path: '/graphql' });
 	app.listen(PORT, () => {
 		log.info(`api-gateway listening on port ${PORT}`);
