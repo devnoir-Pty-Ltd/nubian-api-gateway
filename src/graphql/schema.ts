@@ -3,6 +3,14 @@ import { DocumentNode } from 'graphql';
 
 export const schema: DocumentNode = gql`
 	scalar Date
+	scalar Upload
+
+	type File {
+		id: ID!
+		filename: String!
+		mimetype: String!
+		encoding: String!
+	}
 
 	type User {
 		id: ID
@@ -65,7 +73,7 @@ export const schema: DocumentNode = gql`
 
 		deleteMessage(messageId: String!): Boolean!
 
-		createChannel(accountId: String!, title: String): Channel!
+		createChannel(accountId: String!, title: String!, imageSrc: String): Channel!
 		updateChannel(channelId: String!): Channel!
 		deleteChannel(channelId: String!): Boolean!
 	}

@@ -10,6 +10,7 @@ export interface IResolverContext {
 export interface IChannel {
 	accountId: string;
 	title: string;
+	imageSrc: string;
 }
 
 export interface IMessage {
