@@ -3,14 +3,6 @@ import { DocumentNode } from 'graphql';
 
 export const schema: DocumentNode = gql`
 	scalar Date
-	scalar Upload
-
-	type File {
-		id: ID!
-		filename: String!
-		mimetype: String!
-		encoding: String!
-	}
 
 	type User {
 		id: ID
